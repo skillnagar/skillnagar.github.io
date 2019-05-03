@@ -1,0 +1,93 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Getting Real with Realtime database - Avinash Seth</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="form-signin">
+      <h1 class="h3 mb-3 font-weight-normal">Change Values</h1>
+        <p id="masterIdPlaceholder"></p>
+        <div class="form-group">
+            <label for="" class="control-label">Change Heading</label>
+            <input type="text" class="form-control" id="getHeading" placeholder="Change Heading">
+        </div>
+        <div class="form-group">
+            <label for="" class="control-label">Change Sub Heading</label>
+            <input type="text" class="form-control" id="getSubheading" placeholder="Change Sub Heading">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">#</span>
+            </div>
+            <input type="text" class="form-control" id="getBodyColor" placeholder="Body Color" aria-label="Body Color" aria-describedby="basic-addon1">
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/5.11.1/firebase.js"></script>
+    <script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyCtX-VuvS6tw6YNOkcD6T8iovF9znF8ocE",
+        authDomain: "skillnagar-1bd32.firebaseapp.com",
+        databaseURL: "https://skillnagar-1bd32.firebaseio.com",
+        projectId: "skillnagar-1bd32",
+        storageBucket: "skillnagar-1bd32.appspot.com",
+        messagingSenderId: "241501491413"
+    };
+    firebase.initializeApp(config);
+    var database = firebase.database();
+    var randomId = null;
+    if (typeof(Storage) !== "undefined") {
+        if(localStorage.getItem("masterId")) {
+            randomId = localStorage.getItem("masterId");
+        } else {
+            randomId = Math.floor(Math.random() * 100) + 1;
+            localStorage.setItem("masterId", randomId);
+        }
+        var newUser = firebase.database().ref('users/' + randomId).set({
+            slaveHeading: "Getting Real with Realtime Database - Avinash Seth",
+            slaveSubHeading: "What is realtime database anyways?",
+            slaveBodyColor: '#ffffff'
+        });
+    } else {
+        alert("Your browser is not supported!");
+    }
+    document.getElementById("masterIdPlaceholder").innerHTML = 'Your Master ID is <span class="badge badge-primary">' + randomId + '</span>';
+    document.getElementById("getHeading").onkeyup = function() {
+        setData('users/' + randomId, {slaveHeading: document.getElementById("getHeading").value});
+    };
+    document.getElementById("getSubheading").onkeyup = function() {
+        setData('users/' + randomId, {slaveSubHeading: document.getElementById("getSubheading").value});
+    };
+    document.getElementById("getBodyColor").onkeyup = function() {
+        var bodyColor = document.getElementById("getBodyColor").value;
+        if(bodyColor.length == 3 || bodyColor.length == 6) {
+            setData('users/' + randomId, {slaveBodyColor: '#' + document.getElementById("getBodyColor").value});
+        }
+    };
+    function setData(refId, data) {
+        firebase.database().ref(refId).update(data);
+    }
+    // var newUser = firebase.database().ref('users/' + randomId).set({
+    //     screenHeight: window.screen.height,
+    //     screenWidth: window.screen.width,
+    //     backgroundColor: '#ffdd10'
+    // });
+    </script>
+  </body>
+</html>
+    
+</body>
+</html>

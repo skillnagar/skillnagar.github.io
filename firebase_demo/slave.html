@@ -1,0 +1,50 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Getting Real with Realtime database - Avinash Seth</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="https://getbootstrap.com/docs/4.0/examples/starter-template/starter-template.css" rel="stylesheet">
+  </head>
+
+  <body class="text-center">
+        <main role="main" class="container">
+            <div class="starter-template">
+                <h1 id="heading">Getting Real with Realtime Database - Avinash Seth</h1>
+                <h3 id="sub_heading" style="margin-top: 25px;">What is realtime database anyways?</h3>
+            </div>
+        </main><!-- /.container -->
+  </body>
+  <script src="https://www.gstatic.com/firebasejs/5.11.1/firebase.js"></script>
+    <script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyCtX-VuvS6tw6YNOkcD6T8iovF9znF8ocE",
+        authDomain: "skillnagar-1bd32.firebaseapp.com",
+        databaseURL: "https://skillnagar-1bd32.firebaseio.com",
+        projectId: "skillnagar-1bd32",
+        storageBucket: "skillnagar-1bd32.appspot.com",
+        messagingSenderId: "241501491413"
+    };
+    firebase.initializeApp(config);
+    var database = firebase.database();
+    var masterId = prompt("Please enter your master ID");
+    if(masterId == null || masterId == "") {
+        alert("We need master ID to pair");
+    } else {
+        var starCountRef = firebase.database().ref('/users/' + masterId + '/');
+            starCountRef.on('value', function(snapshot) {
+            document.getElementById("heading").innerText = snapshot.val().slaveHeading;
+            document.getElementById("sub_heading").innerText = snapshot.val().slaveSubHeading;
+            document.body.style.backgroundColor = snapshot.val().slaveBodyColor;
+        });
+    }
+    </script>
+</html>

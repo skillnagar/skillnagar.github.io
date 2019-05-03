@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Firebase Demo</title>
+</head>
+<body>
+    <input type="text" id="getFriendId"><button id="getButton">Get Friend</button>
+    <script src="https://www.gstatic.com/firebasejs/5.11.1/firebase.js"></script>
+    <script>
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyCtX-VuvS6tw6YNOkcD6T8iovF9znF8ocE",
+        authDomain: "skillnagar-1bd32.firebaseapp.com",
+        databaseURL: "https://skillnagar-1bd32.firebaseio.com",
+        projectId: "skillnagar-1bd32",
+        storageBucket: "skillnagar-1bd32.appspot.com",
+        messagingSenderId: "241501491413"
+    };
+    firebase.initializeApp(config);
+    var database = firebase.database();
+    if (typeof(Storage) !== "undefined") {
+        if(localStorage.getItem("gameId")) {
+            alert(localStorage.getItem("gameId"));
+        } else {
+            // new player
+            var newUser = firebase.database().ref('users').push({
+                screenHeight: window.screen.height,
+                screenWidth: window.screen.width,
+                backgroundColor: '#ffdd10'
+            });
+            localStorage.setItem("gameId", newUser.key);
+        }
+    } else {
+        alert("Your browser is not supported!");
+    }
+    var starCountRef = firebase.database().ref('/users/-Ldx4eA02OUehAmx4_6H/');
+        starCountRef.on('value', function(snapshot) {
+        console.log(snapshot.val());
+    });
+    document.getElementById("getButton").onclick = function() {
+        var id = document.getElementById("getFriendId").value;
+        var starCountRef = firebase.database().ref('/users/' + id + '/');
+            starCountRef.on('value', function(snapshot) {
+            document.body.style.backgroundColor = snapshot.val().backgroundColor;
+            // console.log(snapshot.val());
+        });
+    };
+    </script>
+</body>
+</html>
