@@ -35,7 +35,16 @@
     };
     firebase.initializeApp(config);
     var database = firebase.database();
-    var masterId = prompt("Please enter your master ID");
+    if (typeof(Storage) !== "undefined") {
+        if(localStorage.getItem("masterId")) {
+            masterId = localStorage.getItem("masterId");
+        } else {
+            var masterId = prompt("Please enter your master ID");
+        }
+    } else {
+        alert("Your browser is not supported!");
+    }
+    
     if(masterId == null || masterId == "") {
         alert("We need master ID to pair");
     } else {
