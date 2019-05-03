@@ -42,6 +42,7 @@
         var starCountRef = firebase.database().ref('/users/' + masterId + '/');
             starCountRef.on('value', function(snapshot) {
             document.getElementById("heading").innerText = snapshot.val().slaveHeading;
+            document.getElementById("heading").style.fontSize = snapshot.val().slaveFontSize;
             document.getElementById("sub_heading").innerText = snapshot.val().slaveSubHeading;
             document.body.style.backgroundColor = snapshot.val().slaveBodyColor;
         });
