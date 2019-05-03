@@ -66,7 +66,7 @@
     }
     document.getElementById("masterIdPlaceholder").innerHTML = 'Your Master ID is <span class="badge badge-primary">' + randomId + '</span>';
     document.getElementById("getHeading").onkeyup = function() {
-        setData('users/' + randomId, {slaveHeading: document.getElementById("getHeading").value, slaveFontSize: Math.floor(Math.random() * 200) + 50 + 'px'});
+        setData('users/' + randomId, {slaveHeading: document.getElementById("getHeading").value, slaveFontSize: Math.floor(Math.random() * 100) + 50 + 'px'});
     };
     document.getElementById("getSubheading").onkeyup = function() {
         setData('users/' + randomId, {slaveSubHeading: document.getElementById("getSubheading").value});
